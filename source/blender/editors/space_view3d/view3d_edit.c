@@ -1433,10 +1433,11 @@ static int ndof_orbit_zoom_invoke(bContext *C, wmOperator *op, const wmEvent *ev
   }
   else if ((U.ndof_flag & NDOF_MODE_ORBIT) || ED_view3d_offset_lock_check(v3d, rv3d)) {
     const bool has_rotation = NDOF_HAS_ROTATE;
+    const bool has_translate = NDOF_HAS_TRANSLATE;
     const bool has_zoom = (ndof->tvec[2] != 0.0f);
-
-    if (has_zoom) {
-      view3d_ndof_pan_zoom(ndof, vod->sa, vod->ar, false, has_zoom);
+    
+    if (has_zoom || has_translate) {
+      view3d_ndof_pan_zoom(ndof, vod->sa, vod->ar, has_translate, has_zoom);
       xform_flag |= HAS_TRANSLATE;
     }
 
